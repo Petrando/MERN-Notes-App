@@ -6,7 +6,7 @@ const port = env.PORT || 5000
 
 const URI = env.MONGO_CONNECTION_STRING || "";
 
-mongoose.connect(URI, { dbName: "messages",})
+mongoose.connect(URI, { dbName: "cool_notes_app",})
     .then(()=>{
         console.log("connected to MongoDB")
         app.listen(port, () => {
