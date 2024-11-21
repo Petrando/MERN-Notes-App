@@ -15,20 +15,18 @@ app.use("/api/notes", notesRoutes);
 
 app.use((req, res, next) => {
     next(createHttpError(404, "Endpoint not found"));
-    //next(Error("Endpoint not found"))
 });
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
     console.error(error);
-    const errorMessage = "An unknown error occurred";
-    const statusCode = 500;
-    
-    /*
+    let errorMessage = "An unknown error occurred";
+    let statusCode = 500;
+        
     if (isHttpError(error)) {
         statusCode = error.status;
         errorMessage = error.message;
-    }*/
+    }
     res.status(statusCode).json({ error: errorMessage });
 });
 
