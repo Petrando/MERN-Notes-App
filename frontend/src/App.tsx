@@ -34,8 +34,18 @@ function App() {
     loadNotes();
   }, []);
 
+  async function deleteNote(note: NoteModel) {
+    try {
+        await NotesApi.deleteNote(note._id);
+        setNotes(notes.filter(existingNote => existingNote._id !== note._id));
+    } catch (error) {
+        console.error(error);
+        alert(error);
+    }
+}
+
   {/*onNoteClicked={setNoteToEdit}
-                    onDeleteNoteClicked={deleteNote}*/}
+                    */}
   const notesGrid =
     <Row xs={1} md={2} xl={3} className={`g-4 ${styles.notesGrid}`}>
         {notes.map(note => (
@@ -43,7 +53,7 @@ function App() {
                 <Note
                     note={note}
                     className={styles.note}
-                    
+                    onDeleteNoteClicked={deleteNote}
                 />
             </Col>
         ))}
