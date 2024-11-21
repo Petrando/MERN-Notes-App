@@ -8,7 +8,7 @@ import TextInputField from "./form/TextInputField";
 interface AddEditNoteDialogProps {
     noteToEdit?: Note,
     onDismiss: () => void,
-    onNoteSaved: (note: Note) => void,
+    onNoteSaved: (note: Note) => void
 }
 
 const AddEditNoteDialog = ({ noteToEdit, onDismiss, onNoteSaved }: AddEditNoteDialogProps) => {
@@ -23,13 +23,13 @@ const AddEditNoteDialog = ({ noteToEdit, onDismiss, onNoteSaved }: AddEditNoteDi
     async function onSubmit(input: NoteInput) {
         try {
             let noteResponse: Note;
-            /*
+            
             if (noteToEdit) {
                 noteResponse = await NotesApi.updateNote(noteToEdit._id, input);
             } else {
                 noteResponse = await NotesApi.createNote(input);
-            }*/
-            noteResponse = await NotesApi.createNote(input);
+            }
+            
             onNoteSaved(noteResponse);
         } catch (error) {
             console.error(error);

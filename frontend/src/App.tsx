@@ -42,10 +42,8 @@ function App() {
         console.error(error);
         alert(error);
     }
-}
-
-  {/*onNoteClicked={setNoteToEdit}
-                    */}
+  }
+ 
   const notesGrid =
     <Row xs={1} md={2} xl={3} className={`g-4 ${styles.notesGrid}`}>
         {notes.map(note => (
@@ -54,6 +52,7 @@ function App() {
                     note={note}
                     className={styles.note}
                     onDeleteNoteClicked={deleteNote}
+                    onNoteClicked={setNoteToEdit}
                 />
             </Col>
         ))}
@@ -82,6 +81,17 @@ function App() {
               onNoteSaved={(newNote) => {
                   setNotes([...notes, newNote]);
                   setShowAddNoteDialog(false);
+              }}
+          />
+      }
+      {
+        noteToEdit &&
+          <AddEditNoteDialog
+              noteToEdit={noteToEdit}
+              onDismiss={() => setNoteToEdit(null)}
+              onNoteSaved={(updatedNote) => {
+                  setNotes(notes.map(existingNote => existingNote._id === updatedNote._id ? updatedNote : existingNote));
+                  setNoteToEdit(null);
               }}
           />
       }
