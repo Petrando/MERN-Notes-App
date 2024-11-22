@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Col, Row, Spinner } from "react-bootstrap";
+import { Container, Button, Col, Row, Spinner } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa";
 import Note from './components/Note';
 import * as NotesApi from "./network/notes.api"
@@ -59,7 +59,7 @@ function App() {
     </Row>
 
   return (
-    <div className="App">
+    <Container className={styles.notesPage}>
         <Button
             className={`mb-4 ${styleUtils.blockCenter} ${styleUtils.flexCenter}`}
             onClick={() => setShowAddNoteDialog(true)}>
@@ -97,7 +97,7 @@ function App() {
                 }}
             />
         }
-    </div>
+    </Container>
   );
 }
 
