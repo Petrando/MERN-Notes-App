@@ -1,8 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import "dotenv/config"
 import express, { NextFunction, Request, Response } from "express";
+import session from "express-session"
 import createHttpError, { isHttpError } from "http-errors";
+import MongoStore from "connect-mongo";
+import env from "./util/validateEnv"
 import notesRoutes from "./routes/notes";
+import userRoutes from "./routes/users";
 import morgan from "morgan"
 
 const app = express()
@@ -11,7 +15,22 @@ app.use(morgan("dev"))
 
 app.use(express.json())
 
+app.use(session({
+    secret: env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 60 * 60 * 1000,
+    },
+    rolling: true,
+    store: MongoStore.create({
+        mongoUrl: env.MONGO_CONNECTION_STRING
+    }),
+}))
+
+app.use("/api/users", userRoutes);
 app.use("/api/notes", notesRoutes);
+
 
 app.use((req, res, next) => {
     next(createHttpError(404, "Endpoint not found"));
