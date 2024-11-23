@@ -12,18 +12,17 @@ interface NavBarProps {
 }
 
 const NavBar = ({ loggedInUser, onSignUpClicked, onLoginClicked, onLogoutSuccessful }: NavBarProps) => {
-    //as={Link} to="/"
-    //as={Link} to="/privacy"
+    
     return (
         <Navbar bg="primary" variant="dark" expand="sm" sticky="top">
             <Container>
-                <Navbar.Brand >
+                <Navbar.Brand as={Link} to="/">
                     Cool Notes App
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="main-navbar" />
                 <Navbar.Collapse id="main-navbar">
                     <Nav>
-                        <Nav.Link >
+                        <Nav.Link as={Link} to="/privacy">
                             Privacy
                         </Nav.Link>
                     </Nav>

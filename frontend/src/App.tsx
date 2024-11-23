@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Container } from "react-bootstrap";
 import NavBar from './components/NavBar';
 import SignUpModal from './components/SignUpModal';
 import LoginModal from './components/LoginModal';
-import NotesPageLoggedInView from './components/NotesPageLoggedInView';
-import NotesPageLoggedOutView from './components/NotesPageLoggedOutView';
+import NotesPage from './pages/NotesPage';
+import NotFoundPage from './pages/NotFoundPage';
+import PrivacyPage from './pages/PrivacyPage';
 import { User } from './models/user';
 import * as NotesApi from "./network/notes.api";
-import styles from "./styles/NotesPage.module.css";
+import styles from "./styles/App.module.css";
 
 function App() {
     
@@ -29,6 +31,7 @@ function App() {
 	}, []);
 
     return (
+        <BrowserRouter>
         <div>
             <NavBar
                 loggedInUser={loggedInUser}
@@ -36,11 +39,21 @@ function App() {
                 onSignUpClicked={() => setShowSignUpModal(true)}
                 onLogoutSuccessful={() => setLoggedInUser(null)}
             />
-            <Container className={styles.notesPage}>
-                {loggedInUser
-                    ? <NotesPageLoggedInView />
-                    : <NotesPageLoggedOutView />
-                }
+            <Container className={styles.pageContainer}>
+                <Routes>
+                    <Route
+                        path='/'
+                        element={<NotesPage loggedInUser={loggedInUser} />}
+                    />
+                    <Route
+                        path='/privacy'
+                        element={<PrivacyPage />}
+                    />
+                    <Route
+                        path='/*'
+                        element={<NotFoundPage />}
+                    />
+                </Routes>
             </Container>
             {showSignUpModal &&
                 <SignUpModal
@@ -61,6 +74,7 @@ function App() {
                 />
             }
         </div>
+        </BrowserRouter>
     );
 }
 
